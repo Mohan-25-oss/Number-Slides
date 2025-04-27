@@ -1,198 +1,3 @@
-    <!-- <!DOCTYPE html>
-    <html lang="bn">
-    <head>
-    <meta charset="UTF-8">
-    <title>বাংলা রঙিন নাম্বার ১-১০০</title>
-    <style>
-        body {
-        min-height: 100vh;
-        margin: 0;  
-        padding: 20px;
-        font-family: 'Arial', sans-serif;
-        text-align: center;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        background-size: 1000% 1000%;
-        animation: gradientAnimation 15s ease infinite;
-        }
-        @keyframes gradientAnimation {
-        0% {background-position:0% 50%}
-        50% {background-position:100% 50%}
-        100% {background-position:0% 50%}
-        }
-        .slide {
-        margin-top: 50px;
-        padding: 30px;
-        border-radius: 20px;
-        background: white;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        display: inline-block;
-        min-width: 700px;
-        min-height: 650px;
-        transition: all 0.5s ease;
-        position: relative;
-        }
-        .numbers {
-        font-size: 200px;
-        font-weight: bold;
-        margin-top: 70px;
-        margin-bottom: 50px;
-        }
-        .names {
-        font-size: 60px;
-        color: #333333;
-        margin-top: 50px;
-        }
-        .controls {
-        margin-top: 40px;
-        }
-        button {
-        padding: 10px 20px;
-        margin: 10px;
-        font-size: 35px;
-        border: none;
-        border-radius: 10px;
-        background-color: #4CAF50;
-        color: white;
-        cursor: pointer;
-        transition: 0.3s;
-        }
-        button:hover {
-        background-color: #45a049;
-        }
-        .cartoon {
-        position: absolute;
-        bottom: -40px;
-        right: -20px;
-        width: 100px;
-        opacity: 0.6;
-        }
-    </style>
-    </head>
-    <body>
-
-    <h1>বাংলা রঙিন নাম্বার স্লাইডশো 🎨</h1>
-
-    <div>
-        <input type="number" id="startNumber" min="1" max="100" placeholder="যেখানে থেকে শুরু করবেন (১-১০০)" style="padding:10px;font-size:16px;width:250px;">
-        <button onclick="setStart()">শুরু করুন 🚀</button>
-    </div>
-
-    <div id="slideshow-container"></div>
-
-    <div class="controls">
-        <button onclick="previousSlide()">← পূর্ববর্তী</button>
-        <button onclick="togglePlay()"><span id="playPauseBtn">▶️ চালাও</span></button>
-        <button onclick="nextSlide()">পরবর্তী →</button>
-    </div>
-
-    <audio id="audio" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
-
-    <script>
-        const englishNames = [
-        "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
-        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty",
-        "Twenty-One", "Twenty-Two", "Twenty-Three", "Twenty-Four", "Twenty-Five", "Twenty-Six", "Twenty-Seven", "Twenty-Eight", "Twenty-Nine", "Thirty",
-        "Thirty-One", "Thirty-Two", "Thirty-Three", "Thirty-Four", "Thirty-Five", "Thirty-Six", "Thirty-Seven", "Thirty-Eight", "Thirty-Nine", "Forty",
-        "Forty-One", "Forty-Two", "Forty-Three", "Forty-Four", "Forty-Five", "Forty-Six", "Forty-Seven", "Forty-Eight", "Forty-Nine", "Fifty",
-        "Fifty-One", "Fifty-Two", "Fifty-Three", "Fifty-Four", "Fifty-Five", "Fifty-Six", "Fifty-Seven", "Fifty-Eight", "Fifty-Nine", "Sixty",
-        "Sixty-One", "Sixty-Two", "Sixty-Three", "Sixty-Four", "Sixty-Five", "Sixty-Six", "Sixty-Seven", "Sixty-Eight", "Sixty-Nine", "Seventy",
-        "Seventy-One", "Seventy-Two", "Seventy-Three", "Seventy-Four", "Seventy-Five", "Seventy-Six", "Seventy-Seven", "Seventy-Eight", "Seventy-Nine", "Eighty",
-        "Eighty-One", "Eighty-Two", "Eighty-Three", "Eighty-Four", "Eighty-Five", "Eighty-Six", "Eighty-Seven", "Eighty-Eight", "Eighty-Nine", "Ninety",
-        "Ninety-One", "Ninety-Two", "Ninety-Three", "Ninety-Four", "Ninety-Five", "Ninety-Six", "Ninety-Seven", "Ninety-Eight", "Ninety-Nine", "One Hundred"
-        ];
-
-        const bengaliNames = [
-        "", "এক", "দুই", "তিন", "চার", "পাঁচ", "ছয়", "সাত", "আট", "নয়", "দশ",
-        "এগারো", "বারো", "তেরো", "চৌদ্দ", "পনেরো", "ষোল", "সতেরো", "আঠারো", "উনিশ", "বিশ",
-        "একুশ", "বাইশ", "তেইশ", "চব্বিশ", "পঁচিশ", "ছাব্বিশ", "সাতাশ", "আটাশ", "ঊনত্রিশ", "ত্রিশ",
-        "একত্রিশ", "বত্রিশ", "তেত্রিশ", "চৌত্রিশ", "পঁইত্রিশ", "ছত্রিশ", "সাঁইত্রিশ", "আটত্রিশ", "ঊনচল্লিশ", "চল্লিশ",
-        "একচল্লিশ", "বিয়াল্লিশ", "তেতাল্লিশ", "চুয়াল্লিশ", "পঁইচাল্লিশ", "ছেচল্লিশ", "সাতচল্লিশ", "আটচল্লিশ", "ঊনপঞ্চাশ", "পঞ্চাশ",
-        "একান্ন", "বাহান্ন", "তিপ্পান্ন", "চুয়ান্ন", "পঁচান্ন", "ছাপ্পান্ন", "সাতান্ন", "আটান্ন", "ঊনষাট", "ষাট",
-        "একষট্টি", "বাষট্টি", "তেষট্টি", "চৌষট্টি", "পঁইষট্টি", "ছেষট্টি", "সাতষট্টি", "আটষট্টি", "ঊনসত্তর", "সত্তর",
-        "একাত্তর", "বাহাত্তর", "তেহাত্তর", "চুয়াত্তর", "পঁচাত্তর", "ছিয়াত্তর", "সাতাত্তর", "আটাত্তর", "ঊনআশি", "আশি",
-        "একাশি", "বিরাশি", "তিরাশি", "চুরাশি", "পঁচাশি", "ছিয়াশি", "সাতাশি", "আটাশি", "ঊননব্বই", "নব্বই",
-        "একানব্বই", "বিরানব্বই", "তিরানব্বই", "চুরানব্বই", "পঁচানব্বই", "ছিয়ানব্বই", "সাতানব্বই", "আটানব্বই", "নিরানব্বই", "একশো"
-        ];
-
-        const colors = [
-        "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF",
-        "#33FFF2", "#FF8F33", "#8FFF33", "#FF3380", "#8033FF"
-        ];
-
-        let currentSlide = 1;
-        let isPlaying = false;
-        let interval;
-
-        function createSlides() {
-        const container = document.getElementById('slideshow-container');
-        container.innerHTML = '';
-
-        const slide = document.createElement('div');
-        slide.className = 'slide';
-
-        const color = colors[currentSlide % colors.length];
-
-        slide.innerHTML = `
-            <div class="numbers" style="color: ${color};">
-            ${currentSlide} | ${convertToBengaliNumber(currentSlide)}
-            </div>
-            <div class="names">
-            ${bengaliNames[currentSlide]} / ${englishNames[currentSlide]}
-            </div>
-            <img src="images/Devi.jpg" class="cartoon" alt="দেবীর ছবি">
-        `;
-        container.appendChild(slide);
-
-        const audio = document.getElementById('audio');
-        audio.currentTime = 0;
-        audio.play();
-        }
-
-        function convertToBengaliNumber(number) {
-        const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-        return number.toString().split('').map(d => bengaliDigits[d]).join('');
-        }
-
-        function nextSlide() {
-        currentSlide = (currentSlide % 100) + 1;
-        createSlides();
-        }
-
-        function previousSlide() {
-        currentSlide = (currentSlide - 2 + 100) % 100 + 1;
-        createSlides();
-        }
-
-        function togglePlay() {
-        if (!isPlaying) {
-            interval = setInterval(nextSlide, 2000);
-            document.getElementById('playPauseBtn').innerText = '⏸️ থামাও';
-        } else {
-            clearInterval(interval);
-            document.getElementById('playPauseBtn').innerText = '▶️ চালাও';
-        }
-        isPlaying = !isPlaying;
-        }
-
-        function setStart() {
-        const input = document.getElementById('startNumber').value;
-        const number = parseInt(input);
-        if (number >= 1 && number <= 100) {
-            currentSlide = number;
-            createSlides();
-        } else {
-            alert('১ থেকে ১০০ এর মধ্যে নাম্বার দিন!');
-        }
-        }
-
-        // Initial
-        createSlides();
-    </script>
-
-    </body>
-    </html> -->
-
-
 
     <!DOCTYPE html>
     <html lang="bn">
@@ -201,7 +6,7 @@
     <title>বাংলা রঙিন নাম্বার ১-১০০</title>
     <style>
         body {
-            margin: 0;
+            margin: 75px;
             padding: 20px;
             font-family: 'Arial', sans-serif;
             text-align: center;
@@ -261,9 +66,9 @@
             margin-top: 40px;
         }
         button.control-btn {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 25px;
+            padding: 15px 30px;
+            margin: 15px;
+            font-size: 50px;
             border: none;
             border-radius: 10px;
             background-color: #4CAF50;
@@ -297,7 +102,7 @@
     
     <div class="controls">
         <button onclick="previousSlide()" class="control-btn">← পূর্ববর্তী</button>
-        <button onclick="togglePlay()" class="control-btn"><span id="playPauseBtn">▶️ চালাও</span></button>
+        <!-- <button onclick="togglePlay()" class="control-btn"><span id="playPauseBtn">▶️ চালাও</span></button> -->
         <button onclick="nextSlide()" class="control-btn">পরবর্তী →</button>
     </div>
     
