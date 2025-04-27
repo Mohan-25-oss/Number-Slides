@@ -92,6 +92,8 @@
     <body>
     
     <h1>বাংলা রঙিন নাম্বার 🎨</h1>
+
+    <div class="toggle-dark" onclick="toggleDarkMode()">🌙 Dark Mode</div>
     
     <div>
         <input type="number" id="startNumber" min="1" max="100" placeholder="যেখানে থেকে শুরু করবেন (১-১০০)" style="padding:10px;font-size:16px;width:250px;">
@@ -195,6 +197,9 @@
         }
     }
     
+    function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    }
     function speak(text) {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'bn-BD'; // বাংলা ভাষা সেট
